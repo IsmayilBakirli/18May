@@ -1,9 +1,13 @@
 let area=document.querySelector(".area");
 let myBall=document.querySelector(".ball");
-let myp=document.querySelector("p");
 let speed=40;
 let areaWidth=1140;
 let areaHeight=500;
+let ballWidth=40;
+let ballHeight=40;
+let growWidth=5;
+let growHeigth=5;
+let dotArray=[];
 myBall.addEventListener("mouseover",function(){
     if(this.style.backgroundColor=="red"){
         this.style.backgroundColor="blue";
@@ -17,6 +21,15 @@ window.addEventListener("keyup",function(event){
     switch(event.keyCode){
         case 37:
             ballLeft();
+            for(var i=0;i<dotArray.length;i++){
+                if(myBall.offsetLeft+40>dotArray[i].offsetLeft && myBall.offsetTop+40>dotArray[i].offsetTop){
+                    dotArray[i].style.backgroundColor="transparent";
+                    myBall.style.width=`${ballWidth+growWidth}px`;
+                    myBall.style.height=`${ballHeight+growHeigth}px`;
+                    growWidth+=5;
+                    ballHeight+=5;
+                }
+            }
             break;
         case 38:
             ballTop();
@@ -60,9 +73,20 @@ function ballDown() {
         myBall.style.top = `${ballTop + speed}px`;   
     }
 }
-window.addEventListener("keyup",function(ev){
-    if (ev.keyCode==13) {
-
-    }
+function randomNumberWidth() {
+    return Math.random()*1000;
 }
-)
+function randomNumberHeight() {
+    return Math.random()*400;
+}
+function createDots() {
+    let dot=document.createElement("span");
+    dot.className="dot";
+    dot.style.left=`${randomNumberWidth()}px`;
+    dot.style.top=`${randomNumberHeight()}px`;
+    area.appendChild(dot);
+    dotArray.push(dot);
+}
+for(let i=0;i<50;i++){
+    createDots();
+}

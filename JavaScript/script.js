@@ -5,8 +5,8 @@ let areaWidth=1140;
 let areaHeight=500;
 let ballWidth=40;
 let ballHeight=40;
-let growWidth=1;
-let growHeigth=1;
+let growWidth=3;
+let growHeigth=3;
 let dotArray=[];
 myBall.addEventListener("mouseover",function(){
     if(this.style.backgroundColor=="red"){
@@ -18,6 +18,17 @@ myBall.addEventListener("mouseover",function(){
 }
 )
 window.addEventListener("keyup",function(event){
+    for(var i=0;i<dotArray.length;i++){
+        if(dotArray[i].offsetLeft>myBall.offsetLeft && dotArray[i].offsetLeft<(myBall.offsetLeft+ballWidth)){
+            if (dotArray[i].offsetTop>myBall.offsetTop && dotArray[i].offsetTop<(myBall.offsetTop+ballHeight)) {
+                dotArray[i].style.display="none";
+                myBall.style.width=`${ballWidth+growWidth}px`;
+                myBall.style.height=`${ballHeight+growHeigth}px`;
+                ballWidth+=3;
+                ballHeight+=3;         
+            }
+        }
+    }
     switch(event.keyCode){
         case 37:
             ballLeft();
@@ -33,15 +44,6 @@ window.addEventListener("keyup",function(event){
             break;
         default:
             break;
-    }
-    for(var i=0;i<dotArray.length;i++){
-        if(myBall.offsetLeft+40>dotArray[i].offsetLeft && myBall.offsetTop+40>dotArray[i].offsetTop){
-            dotArray[i].style.backgroundColor="transparent";
-            myBall.style.width=`${ballWidth+growWidth}px`;
-            myBall.style.height=`${ballHeight+growHeigth}px`;
-            growWidth+=1;
-            ballHeight+=1;
-        }
     }
 }
 )
